@@ -1,0 +1,156 @@
+[
+    {
+        "start": "SZX",
+        "end": "PEK",
+        "start_location": [
+            113.812,
+            22.638
+        ],
+        "end_location": [
+            116.598,
+            40.073
+        ],
+        "start_text": "Shenzhen Bao'an International Airport",
+        "end_text": "Beijing Capital Airport"
+    },
+    {
+        "start": "PEK",
+        "end": "SZX",
+        "start_location": [
+            116.598,
+            40.073
+        ],
+        "end_location": [
+            113.812,
+            22.638
+        ],
+        "start_text": "Beijing Capital Airport",
+        "end_text": "Shenzhen Bao'an International Airport"
+    },
+    {
+        "start": "PVG",
+        "end": "LAX",
+        "start_location": [
+            121.793,
+            31.145
+        ],
+        "end_location": [
+            -118.408048,
+            33.942496
+        ],
+        "start_text": "Pudong International Airport",
+        "end_text": "Los Angeles International Airport"
+    },
+    {
+        "start": "LAX",
+        "end": "YYZ",
+        "start_location": [
+            -118.408048,
+            33.942496
+        ],
+        "end_location": [
+            -79.630555,
+            43.676667
+        ],
+        "start_text": "Los Angeles International Airport",
+        "end_text": "Lester B. Pearson International Airport"
+    },
+    {
+        "start": "YYZ",
+        "end": "LHR",
+        "start_location": [
+            -79.630555,
+            43.676667
+        ],
+        "end_location": [
+            -0.461388,
+            51.4775
+        ],
+        "start_text": "Lester B. Pearson International Airport",
+        "end_text": "Heathrow Airport"
+    },
+    {
+        "start": "LHR",
+        "end": "HEL",
+        "start_location": [
+            -0.461388,
+            51.4775
+        ],
+        "end_location": [
+            24.963333,
+            60.317222
+        ],
+        "start_text": "Heathrow Airport",
+        "end_text": "Vantaa"
+    },
+    {
+        "start": "HEL",
+        "end": "FRA",
+        "start_location": [
+            24.963333,
+            60.317222
+        ],
+        "end_location": [
+            8.570456,
+            50.033306
+        ],
+        "start_text": "Vantaa",
+        "end_text": "Rhein-Main"
+    },
+    {
+        "start": "FRA",
+        "end": "DXB",
+        "start_location": [
+            8.570456,
+            50.033306
+        ],
+        "end_location": [
+            55.364444,
+            25.252778
+        ],
+        "start_text": "Rhein-Main",
+        "end_text": "Dubai International Airport"
+    },
+    {
+        "start": "DXB",
+        "end": "SYD",
+        "start_location": [
+            55.364444,
+            25.252778
+        ],
+        "end_location": [
+            151.177222,
+            -33.94611
+        ],
+        "start_text": "Dubai International Airport",
+        "end_text": "Kingsford Smith"
+    },
+    {
+        "start": "SYD",
+        "end": "SIN",
+        "start_location": [
+            151.177222,
+            -33.94611
+        ],
+        "end_location": [
+            103.989333,
+            1.359211
+        ],
+        "start_text": "Kingsford Smith",
+        "end_text": "Changi International Airport"
+    },
+    {
+        "start": "PEK",
+        "end": "SZX",
+        "start_location": [
+            116.598,
+            40.073
+        ],
+        "end_location": [
+            113.812,
+            22.638
+        ],
+        "start_text": "Beijing Capital Airport",
+        "end_text": "Shenzhen Bao'an International Airport"
+    }
+]

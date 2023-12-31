@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>Flight Routes Map</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-    <link href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet" />
+    <link href="https://registry.npmmirror.com/maplibre-gl/3.6.2/files/dist/maplibre-gl.css" rel="stylesheet" />
     <style>
         body { margin: 0; padding: 0; }
         #map { position: absolute; top: 0; bottom: 0; width: 100%; }
@@ -12,167 +12,9 @@
 </head>
 <body>
 <div id="map"></div>
-<script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+<script src="https://registry.npmmirror.com/maplibre-gl/3.6.2/files/dist/maplibre-gl.js"></script>
+<script src="https://registry.npmmirror.com/@turf/turf/6.5.0/files/turf.min.js"></script>
 <script>
-
-    // 航线数据，可以直接从你的JSON文件加载
-    const routes = [
-    {
-        "start": "SZX",
-        "end": "PEK",
-        "start_location": [
-            113.812,
-            22.638
-        ],
-        "end_location": [
-            116.598,
-            40.073
-        ],
-        "start_text": "Shenzhen Bao'an International Airport",
-        "end_text": "Beijing Capital Airport"
-    },
-    {
-        "start": "PEK",
-        "end": "SZX",
-        "start_location": [
-            116.598,
-            40.073
-        ],
-        "end_location": [
-            113.812,
-            22.638
-        ],
-        "start_text": "Beijing Capital Airport",
-        "end_text": "Shenzhen Bao'an International Airport"
-    },
-    {
-        "start": "PVG",
-        "end": "LAX",
-        "start_location": [
-            121.793,
-            31.145
-        ],
-        "end_location": [
-            -118.408048,
-            33.942496
-        ],
-        "start_text": "Pudong International Airport",
-        "end_text": "Los Angeles International Airport"
-    },
-    {
-        "start": "LAX",
-        "end": "YYZ",
-        "start_location": [
-            -118.408048,
-            33.942496
-        ],
-        "end_location": [
-            -79.630555,
-            43.676667
-        ],
-        "start_text": "Los Angeles International Airport",
-        "end_text": "Lester B. Pearson International Airport"
-    },
-    {
-        "start": "YYZ",
-        "end": "LHR",
-        "start_location": [
-            -79.630555,
-            43.676667
-        ],
-        "end_location": [
-            -0.461388,
-            51.4775
-        ],
-        "start_text": "Lester B. Pearson International Airport",
-        "end_text": "Heathrow Airport"
-    },
-    {
-        "start": "LHR",
-        "end": "HEL",
-        "start_location": [
-            -0.461388,
-            51.4775
-        ],
-        "end_location": [
-            24.963333,
-            60.317222
-        ],
-        "start_text": "Heathrow Airport",
-        "end_text": "Vantaa"
-    },
-    {
-        "start": "HEL",
-        "end": "FRA",
-        "start_location": [
-            24.963333,
-            60.317222
-        ],
-        "end_location": [
-            8.570456,
-            50.033306
-        ],
-        "start_text": "Vantaa",
-        "end_text": "Rhein-Main"
-    },
-    {
-        "start": "FRA",
-        "end": "DXB",
-        "start_location": [
-            8.570456,
-            50.033306
-        ],
-        "end_location": [
-            55.364444,
-            25.252778
-        ],
-        "start_text": "Rhein-Main",
-        "end_text": "Dubai International Airport"
-    },
-    {
-        "start": "DXB",
-        "end": "SYD",
-        "start_location": [
-            55.364444,
-            25.252778
-        ],
-        "end_location": [
-            151.177222,
-            -33.94611
-        ],
-        "start_text": "Dubai International Airport",
-        "end_text": "Kingsford Smith"
-    },
-    {
-        "start": "SYD",
-        "end": "SIN",
-        "start_location": [
-            151.177222,
-            -33.94611
-        ],
-        "end_location": [
-            103.989333,
-            1.359211
-        ],
-        "start_text": "Kingsford Smith",
-        "end_text": "Changi International Airport"
-    },
-    {
-        "start": "PEK",
-        "end": "SZX",
-        "start_location": [
-            116.598,
-            40.073
-        ],
-        "end_location": [
-            113.812,
-            22.638
-        ],
-        "start_text": "Beijing Capital Airport",
-        "end_text": "Shenzhen Bao'an International Airport"
-    }
-];
 
     const map = new maplibregl.Map({
         container: 'map',
@@ -181,12 +23,23 @@
         zoom: 2 // 初始缩放级别
     });
 
-    map.on('load', function () {
+    // 添加AttributionControl
+    map.addControl(new maplibregl.AttributionControl({
+        compact: true, // 如果你希望控件更小，可以设置为true
+        customAttribution: 'Airport Location Data sourced from GCMap.com' // 自定义的属性文本
+    }));
+    // Add zoom and rotation controls to the map.
+    map.addControl(new maplibregl.NavigationControl());
 
+    map.on('load', function () {
+  // 使用 fetch API 从远程URL异步加载数据
+  fetch('/flight.json')
+    .then(response => response.json()) // 解析JSON格式的响应
+    .then(routes => {
     //google tiles
     map.addSource('raster-tiles', {
         type: 'raster',
-        tiles: ['https://gac-geo.googlecnapps.cn/maps/vt?lyrs=m&x={x}&y={y}&z={z}&scale=2'],
+        tiles: ['https://gac-geo.googlecnapps.cn/maps/vt?lyrs=s&x={x}&y={y}&z={z}&scale=2'],
         tileSize: 256
       });
       map.addLayer({
@@ -203,8 +56,8 @@
 
     // 添加航线
     // 定义线条颜色和航点样式
-    const lineColor = 'rgb(60, 139, 176)';
-    const circleColor = 'rgb(60, 139, 176)';
+    const lineColor = '#F27405';
+    const circleColor = '#F27405';
     const circleOutlineColor = 'white';
 
     // 添加航线
@@ -231,7 +84,7 @@
             },
             'paint': {
                 'line-color': lineColor,
-                'line-width': 4
+                'line-width': 2
             }
         });
     });
@@ -261,9 +114,9 @@
                     'type': 'circle',
                     'source': pointId,
                     'paint': {
-                        'circle-radius': 6,
+                        'circle-radius': 4,
                         'circle-color': circleColor,
-                        'circle-stroke-width': 2,
+                        'circle-stroke-width': 1,
                         'circle-stroke-color': circleOutlineColor
                     }
                 });
@@ -275,12 +128,14 @@
                     'source': pointId,
                     'layout': {
                         'text-field': route[point],
-                        'text-size': 12,
+                        'text-size': 15,
                         'text-anchor': 'left',
-                        'text-offset': [0.8, 0]
+                        'text-offset': [0.8, 0],
                     },
                     'paint': {
-                        'text-color': lineColor
+                        'text-color': lineColor,
+                        'text-halo-color': '#FFFFFE', // 可选：添加文本边框颜色以提高可读性
+                        'text-halo-width': 1 // 可选：设置文本边框的宽度
                     }
                 });
             }
@@ -311,7 +166,13 @@
             });
         });
     });
+
+    })
+    .catch(error => {
+      console.error('Error loading the route data:', error);
+    });
 });
+
 
 </script>
 </body>
